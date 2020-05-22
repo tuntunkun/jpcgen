@@ -25,6 +25,11 @@ Or You can generate English translated version with `--translate` or `-t` option
 jpcgen --translate 81-en.txt
 ```
 
+You can change output encoding with `--encoding` or `-e` option like below.
+```sh
+jpcgen --encoding utf8 81-ja-utf8.txt
+```
+
 If output file is omitted, standard output is used.
 
 ### License
