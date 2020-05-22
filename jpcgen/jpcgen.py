@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import requests
+import locale
 import click
 import xlrd
 import sys
+import io
 
 # only for mobile numbers
 urls = {
@@ -20,7 +22,7 @@ en_company_names = {
 	'楽天モバイル': 'Rakuten Mobile',
 }
 
-def generate(OXO, file=sys.stdout, translate=False):
+def generate(OXO, output=sys.stdout, translate=False, encoding='utf-8'):
 	wbook = xlrd.open_workbook(file_contents=requests.get(urls[OXO]).content)
 	wsheet = wbook.sheet_by_name(OXO)
 
@@ -34,15 +36,23 @@ def generate(OXO, file=sys.stdout, translate=False):
 				carrier = wsheet.cell(j, i+1).value
 
 				if translate:
-					print('%s%d|%s' % (prefix, i, en_company_names[carrier]), file=file)
+					print('%s%d|%s' % (prefix, i, en_company_names[carrier]), file=output)
 				else:
-					print('%s%d|%s' % (prefix, i, carrier), file=file)
+					print('%s%d|%s' % (prefix, i, carrier), file=output)
 
 
 
 @click.command()
 @click.argument('OUTPUT', type=click.File('w'), default=sys.stdout)
 @click.option('--translate', '-t', is_flag=True, help='Translate carrier names into English.')
-def main(output, translate):
+@click.option('--encoding', '-e', default=None, metavar='ENCODING', help='Output encoding.')
+def main(output, translate, encoding):
+	if encoding is None:
+		if output is sys.stdout:
+			encoding = locale.getpreferredencoding()
+		else:
+			encoding = 'utf-8'
+
+	output = io.TextIOWrapper(output.buffer, encoding=encoding)
 	for prefix in urls:
-		generate(prefix, output, translate)
+		generate(prefix, output, translate, encoding)
