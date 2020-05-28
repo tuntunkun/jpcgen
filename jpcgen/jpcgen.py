@@ -28,7 +28,7 @@ def generate(OXO, output=sys.stdout, translate=False, encoding='utf-8'):
 
 	# carrier definition starts on line 8
 	for j in range(7, wsheet.nrows):
-		for i in range(0, 9):
+		for i in range(0, 10):
 			prefix = wsheet.cell(j, 0).value
 
 			# skip unused prefix numbers
