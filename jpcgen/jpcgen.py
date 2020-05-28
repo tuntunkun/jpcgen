@@ -16,7 +16,7 @@ urls = {
 # these translated names are based on the official website for each company
 en_company_names = {
 	'ＮＴＴドコモ': 'NTT DOCOMO',
-	'ソフトバンク': 'SoftBank ',
+	'ソフトバンク': 'SoftBank',
 	'ＫＤＤＩ': 'KDDI',
 	'沖縄セルラー電話': 'Okinawa Cellular',
 	'楽天モバイル': 'Rakuten Mobile',
